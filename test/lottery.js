@@ -4,9 +4,7 @@ const { web3 } = require("@openzeppelin/test-helpers/src/setup");
 
 const balances = async (addresses) => {
   const balanceResults = await Promise.all(
-    addresses.map((address) => {
-      web3.eth.getBalance(address);
-    })
+    addresses.map((address) => web3.eth.getBalance(address))
   );
   return balanceResults.map((balance) => web3.utils.toBN(balance));
 };
@@ -78,7 +76,7 @@ contract("Lottery", (accounts) => {
     );
     const balancesAfter = await balances(players);
     const result = players.some((_player, i) => {
-      const gasUsed = web3.utils.toBN(txs[i].receipt.gasUsed());
+      const gasUsed = web3.utils.toBN(txs[i].receipt.gasUsed);
       const expected = web3.utils.toBN(web3.utils.toWei("1.94", "ether"));
       return balancesAfter[i].sub(balancesBefore[i]).add(gasUsed).eq(expected);
     });

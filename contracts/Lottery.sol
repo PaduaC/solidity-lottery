@@ -16,6 +16,14 @@ contract Lottery {
         admin = msg.sender;
     }
 
+    function getPlayers() external view returns (address[] memory) {
+        address[] memory _players = new address[](players.length);
+        for (uint256 i = 0; i < players.length; i++) {
+            _players[i] = players[i];
+        }
+        return _players;
+    }
+
     function createBet(uint256 count, uint256 size)
         external
         payable
